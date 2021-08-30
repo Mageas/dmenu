@@ -1,4 +1,8 @@
+Notes:
+All my configuration is in this file
 
+Configuration of the following patches:
+ * highlight
 --- a/config.def.h
 +++ b/config.def.h
 @@ -4,14 +4,17 @@

@@ -1,4 +1,4 @@
-Version: dmenu-numbers-4.9.diff
+Version: https://tools.suckless.org/dmenu/patches/numbers/dmenu-numbers-4.9.diff
 --- a/dmenu.c
 +++ b/dmenu.c
 @@ -24,6 +24,8 @@
