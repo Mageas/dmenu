@@ -3,7 +3,7 @@ Version: https://tools.suckless.org/dmenu/patches/highlight/dmenu-highlight-2020
 +++ b/dmenu.c
 @@ -26,8 +26,7 @@
  #define TEXTW(X)              (drw_fontset_getwidth(drw, (X)) + lrpad)
- 
+
  /* enums */
 -enum { SchemeNorm, SchemeSel, SchemeOut, SchemeLast }; /* color schemes */
 -
@@ -14,7 +14,7 @@ Version: https://tools.suckless.org/dmenu/patches/highlight/dmenu-highlight-2020
 @@ -113,6 +112,43 @@ cistrstr(const char *s, const char *sub)
  	return NULL;
  }
- 
+
 +static void
 +drawhighlights(struct item *item, int x, int y, int maxw)
 +{
@@ -58,11 +58,11 @@ Version: https://tools.suckless.org/dmenu/patches/highlight/dmenu-highlight-2020
 @@ -123,7 +159,9 @@ drawitem(struct item *item, int x, int y, int w)
  	else
  		drw_setscheme(drw, scheme[SchemeNorm]);
- 
+
 -	return drw_text(drw, x, y, w, bh, lrpad / 2, item->text, 0);
 +	int r = drw_text(drw, x, y, w, bh, lrpad / 2, item->text, 0);
 +	drawhighlights(item, x, y, w);
 +	return r;
  }
- 
+
  static void

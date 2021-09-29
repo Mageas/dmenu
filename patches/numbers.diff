@@ -7,13 +7,13 @@ Version: https://tools.suckless.org/dmenu/patches/numbers/dmenu-numbers-4.9.diff
  #define TEXTW(X)              (drw_fontset_getwidth(drw, (X)) + lrpad)
 +#define NUMBERSMAXDIGITS      100
 +#define NUMBERSBUFSIZE        (NUMBERSMAXDIGITS * 2) + 1
- 
+
  /* enums */
  enum { SchemeNorm, SchemeSel, SchemeOut, SchemeLast }; /* color schemes */
 @@ -34,6 +36,7 @@ struct item {
  	int out;
  };
- 
+
 +static char numbers[NUMBERSBUFSIZE] = "";
  static char text[BUFSIZ] = "";
  static char *embed;
@@ -21,7 +21,7 @@ Version: https://tools.suckless.org/dmenu/patches/numbers/dmenu-numbers-4.9.diff
 @@ -126,6 +129,21 @@ drawitem(struct item *item, int x, int y, int w)
  	return drw_text(drw, x, y, w, bh, lrpad / 2, item->text, 0);
  }
- 
+
 +static void
 +recalculatenumbers()
 +{
@@ -43,7 +43,7 @@ Version: https://tools.suckless.org/dmenu/patches/numbers/dmenu-numbers-4.9.diff
 @@ -151,6 +169,7 @@ drawmenu(void)
  		drw_rect(drw, x + curpos, 2, 2, bh - 4, 1, 0);
  	}
- 
+
 +	recalculatenumbers();
  	if (lines > 0) {
  		/* draw vertical list */
@@ -65,4 +65,4 @@ Version: https://tools.suckless.org/dmenu/patches/numbers/dmenu-numbers-4.9.diff
 +	drw_text(drw, mw - TEXTW(numbers), 0, TEXTW(numbers), bh, lrpad / 2, numbers, 0);
  	drw_map(drw, win, 0, 0, mw, mh);
  }
- 
+
