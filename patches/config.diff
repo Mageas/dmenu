@@ -10,7 +10,7 @@ Configuration of the following patches:
  /* -fn option overrides fonts[0]; default X11 font or font set */
  static const char *fonts[] = {
 -	"monospace:size=10"
-+	"FreeMono:style=Regular:size=12"
++	"Source Code Pro:style=Medium:size=11"
  };
  static const char *prompt      = NULL;      /* -p  option; prompt to the left of input field */
  static const char *colors[SchemeLast][2] = {
@@ -21,8 +21,8 @@ Configuration of the following patches:
 +	/*                            fg         bg        */
 +	[SchemeNorm] =              { "#6272a4", "#282a36" },
 +	[SchemeSel] =               { "#f8f8f2", "#44475a" },
-+	[SchemeSelHighlight] =      { "#ffb86c", "#44475a" },
-+	[SchemeNormHighlight] =     { "#ffb86c", "#282a36" },
++	[SchemeSelHighlight] =      { "#51afef", "#44475a" },
++	[SchemeNormHighlight] =     { "#51afef", "#282a36" },
 +	[SchemeOut] =               { "#000000", "#00ffff" },
 +	[SchemeOutHighlight] =      { "#ffc978", "#00ffff" },
 +	[SchemeHp] =                { "#ff5555", "#282a36" },
