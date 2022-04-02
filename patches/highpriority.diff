@@ -20,7 +20,7 @@ Version: https://tools.suckless.org/dmenu/patches/highpriority/dmenu-highpriorit
 
  static Atom clip, utf8;
  static Display *dpy;
-@@ -58,6 +60,36 @@ static Clr *scheme[SchemeLast];
+@@ -58,6 +60,37 @@ static Clr *scheme[SchemeLast];
  static int (*fstrncmp)(const char *, const char *, size_t) = strncmp;
  static char *(*fstrstr)(const char *, const char *) = strstr;
 
@@ -54,10 +54,11 @@ Version: https://tools.suckless.org/dmenu/patches/highpriority/dmenu-highpriorit
 +	return 0;
 +}
 +
- static void
- appenditem(struct item *item, struct item **list, struct item **last)
++
+ static unsigned int
+ textw_clamp(const char *str, unsigned int n)
  {
-@@ -118,6 +150,8 @@ drawitem(struct item *item, int x, int y, int w)
+@@ -135,6 +168,8 @@ drawitem(struct item *item, int x, int y, int w)
  {
  	if (item == sel)
  		drw_setscheme(drw, scheme[SchemeSel]);
@@ -66,7 +67,7 @@ Version: https://tools.suckless.org/dmenu/patches/highpriority/dmenu-highpriorit
  	else if (item->out)
  		drw_setscheme(drw, scheme[SchemeOut]);
  	else
-@@ -219,7 +253,7 @@ match(void)
+@@ -236,7 +271,7 @@ match(void)
  	char buf[sizeof text], *s;
  	int i, tokc = 0;
  	size_t len, textsize;
@@ -75,8 +76,8 @@ Version: https://tools.suckless.org/dmenu/patches/highpriority/dmenu-highpriorit
 
  	strcpy(buf, text);
  	/* separate input text into tokens to be matched individually */
-@@ -228,7 +262,7 @@ match(void)
- 			die("cannot realloc %u bytes:", tokn * sizeof *tokv);
+@@ -245,7 +280,7 @@ match(void)
+ 			die("cannot realloc %zu bytes:", tokn * sizeof *tokv);
  	len = tokc ? strlen(tokv[0]) : 0;
 
 -	matches = lprefix = lsubstr = matchend = prefixend = substrend = NULL;
@@ -84,7 +85,7 @@ Version: https://tools.suckless.org/dmenu/patches/highpriority/dmenu-highpriorit
  	textsize = strlen(text) + 1;
  	for (item = items; item && item->text; item++) {
  		for (i = 0; i < tokc; i++)
-@@ -236,14 +270,24 @@ match(void)
+@@ -253,14 +288,24 @@ match(void)
  				break;
  		if (i != tokc) /* not all tokens match */
  			continue;
@@ -110,15 +111,16 @@ Version: https://tools.suckless.org/dmenu/patches/highpriority/dmenu-highpriorit
  	if (lprefix) {
  		if (matches) {
  			matchend->right = lprefix;
-@@ -546,6 +590,7 @@ readstdin(void)
+@@ -561,7 +606,7 @@ readstdin(void)
+ 			*p = '\0';
  		if (!(items[i].text = strdup(buf)))
- 			die("cannot strdup %u bytes:", strlen(buf) + 1);
- 		items[i].out = 0;
+ 			die("cannot strdup %zu bytes:", strlen(buf) + 1);
+-		items[i].out = 0;
 +		items[i].hp = arrayhas(hpitems, hplength, items[i].text);
- 		drw_font_getexts(drw->fonts, buf, strlen(buf), &tmpmax, NULL);
- 		if (tmpmax > inputw) {
- 			inputw = tmpmax;
-@@ -744,6 +789,8 @@ main(int argc, char *argv[])
+ 	}
+ 	if (items)
+ 		items[i].text = NULL;
+@@ -760,6 +805,8 @@ main(int argc, char *argv[])
  			colors[SchemeSel][ColFg] = argv[++i];
  		else if (!strcmp(argv[i], "-w"))   /* embedding window id */
  			embed = argv[++i];

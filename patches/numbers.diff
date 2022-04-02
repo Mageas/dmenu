@@ -18,7 +18,7 @@ Version: https://tools.suckless.org/dmenu/patches/numbers/dmenu-numbers-4.9.diff
  static char text[BUFSIZ] = "";
  static char *embed;
  static int bh, mw, mh;
-@@ -126,6 +129,21 @@ drawitem(struct item *item, int x, int y, int w)
+@@ -143,6 +146,21 @@ drawitem(struct item *item, int x, int y, int w)
  	return drw_text(drw, x, y, w, bh, lrpad / 2, item->text, 0);
  }
 
@@ -40,7 +40,7 @@ Version: https://tools.suckless.org/dmenu/patches/numbers/dmenu-numbers-4.9.diff
  static void
  drawmenu(void)
  {
-@@ -151,6 +169,7 @@ drawmenu(void)
+@@ -168,6 +186,7 @@ drawmenu(void)
  		drw_rect(drw, x + curpos, 2, 2, bh - 4, 1, 0);
  	}
 
@@ -48,11 +48,11 @@ Version: https://tools.suckless.org/dmenu/patches/numbers/dmenu-numbers-4.9.diff
  	if (lines > 0) {
  		/* draw vertical list */
  		for (item = curr; item != next; item = item->right)
-@@ -165,13 +184,15 @@ drawmenu(void)
+@@ -182,13 +201,15 @@ drawmenu(void)
  		}
  		x += w;
  		for (item = curr; item != next; item = item->right)
--			x = drawitem(item, x, 0, MIN(TEXTW(item->text), mw - x - TEXTW(">")));
+-			x = drawitem(item, x, 0, textw_clamp(item->text, mw - x - TEXTW(">")));
 +			x = drawitem(item, x, 0, MIN(TEXTW(item->text), mw - x - TEXTW(">") - TEXTW(numbers)));
  		if (next) {
  			w = TEXTW(">");

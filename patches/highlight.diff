@@ -1,7 +1,7 @@
 Version: https://tools.suckless.org/dmenu/patches/highlight/dmenu-highlight-20201211-fcdc159.diff
 --- a/dmenu.c
 +++ b/dmenu.c
-@@ -113,6 +113,43 @@ cistrstr(const char *s, const char *sub)
+@@ -130,6 +130,43 @@ cistrstr(const char *h, const char *n)
  	return NULL;
  }
 
@@ -45,7 +45,7 @@ Version: https://tools.suckless.org/dmenu/patches/highlight/dmenu-highlight-2020
  static int
  drawitem(struct item *item, int x, int y, int w)
  {
-@@ -123,7 +160,9 @@ drawitem(struct item *item, int x, int y, int w)
+@@ -140,7 +177,9 @@ drawitem(struct item *item, int x, int y, int w)
  	else
  		drw_setscheme(drw, scheme[SchemeNorm]);
 
