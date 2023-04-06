@@ -10,14 +10,14 @@ Version: https://tools.suckless.org/dmenu/patches/numbers/dmenu-numbers-4.9.diff
 
  /* enums */
  enum { SchemeNorm, SchemeSel, SchemeOut, SchemeLast }; /* color schemes */
-@@ -34,6 +36,7 @@ struct item {
- 	int out;
- };
-
+@@ -44,6 +46,7 @@ static struct item *items = NULL;
+ static struct item *matches, *matchend;
+ static struct item *prev, *curr, *next, *sel;
+ static int mon = -1, screen;
 +static char numbers[NUMBERSBUFSIZE] = "";
- static char text[BUFSIZ] = "";
- static char *embed;
- static int bh, mw, mh;
+
+ static Atom clip, utf8;
+ static Display *dpy;
 @@ -143,6 +146,21 @@ drawitem(struct item *item, int x, int y, int w)
  	return drw_text(drw, x, y, w, bh, lrpad / 2, item->text, 0);
  }
